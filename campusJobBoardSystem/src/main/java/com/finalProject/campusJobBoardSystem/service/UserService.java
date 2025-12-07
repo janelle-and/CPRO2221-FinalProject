@@ -39,6 +39,7 @@ public class UserService implements UserDetailsService {
                 .withUsername(user.getFull_name())
                 .password(user.getPassword())
                 .roles(user.getRole().toString().replace("ROLE_USER", ""))
+                .disabled(user.getStatus() == User.Status.INACTIVE)
                 .build();
     }
 }
