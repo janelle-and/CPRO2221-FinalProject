@@ -1,4 +1,4 @@
 package com.finalProject.campusJobBoardSystem.repository;
 
-public class JobApplicationRepository {
+public interface JobApplicationRepository {
 }
