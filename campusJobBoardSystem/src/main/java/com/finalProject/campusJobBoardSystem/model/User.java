@@ -41,6 +41,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+//    @NotBlank
+//    public String role;
+
     public enum Status {
         ACTIVE,
         INACTIVE
