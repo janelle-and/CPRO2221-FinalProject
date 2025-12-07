@@ -1,4 +1,4 @@
-package com.finalProject.campusJobBoardSystem.Service;
+package com.finalProject.campusJobBoardSystem.service;
 
 
 import com.finalProject.campusJobBoardSystem.model.Job;
