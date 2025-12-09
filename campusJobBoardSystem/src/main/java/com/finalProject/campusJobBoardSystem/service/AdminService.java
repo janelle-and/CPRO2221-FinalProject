@@ -41,6 +41,7 @@ public class AdminService implements UserDetailsService {
                 .withUsername(user.getFull_name())
                 .password(user.getPassword())
                 .roles(user.getRole().toString().replace("ROLE_ADMIN", ""))
+                .disabled(user.getStatus() == User.Status.INACTIVE)
                 .build();
     }
 
