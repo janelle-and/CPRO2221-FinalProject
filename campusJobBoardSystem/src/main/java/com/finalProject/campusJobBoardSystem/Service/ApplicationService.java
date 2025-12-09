@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly=true)
 public class ApplicationService{
 
     private final JobApplicationRepository jobAppRepo;
@@ -27,11 +26,11 @@ public class ApplicationService{
     public Optional<JobApplication> findById(Long id) {
         return jobAppRepo.findById(id);
     }
-    @Transactional
+
     public JobApplication save(JobApplication jobApp) {
         return jobAppRepo.save(jobApp);
     }
-    @Transactional
+
     public void delete(JobApplication jobApp) {
         jobAppRepo.delete(jobApp);
     }
