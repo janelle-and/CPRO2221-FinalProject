@@ -40,7 +40,7 @@ public class AdminService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getFull_name())
                 .password(user.getPassword())
-                .roles(user.getRole().toString().replace("ROLE_ADMIN", ""))
+                .roles(user.getRole().toString().replace("ADMIN", ""))
                 .disabled(user.getStatus() == User.Status.INACTIVE)
                 .build();
     }

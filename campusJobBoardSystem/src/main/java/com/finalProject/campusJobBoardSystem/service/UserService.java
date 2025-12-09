@@ -34,11 +34,11 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-
+        // edit in future
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getFull_name())
                 .password(user.getPassword())
-                .roles(user.getRole().toString().replace("ROLE_USER", ""))
+                .roles(user.getRole().toString().replace("STUDENT", ""))
                 .disabled(user.getStatus() == User.Status.INACTIVE)
                 .build();
     }
