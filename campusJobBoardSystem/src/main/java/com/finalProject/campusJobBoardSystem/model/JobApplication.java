@@ -38,7 +38,7 @@ public class JobApplication {
     )
     private List<User> student_id = new ArrayList<>();
 
-
+    // constructors
     public JobApplication() {
     }
 
@@ -50,6 +50,7 @@ public class JobApplication {
         this.student_id = student_id;
     }
 
+    // getters and setters
     public Long getApplication_id() {
         return application_id;
     }

@@ -24,8 +24,7 @@ private final JobRepository jobRepo;
         return jobRepo.save(job);
     }
 
-    public void delete(Job job) {
-        jobRepo.delete(job);
+    public void deleteById(Long id) { jobRepo.deleteById(id);
     }
     public Job findById(Long id) {
         return jobRepo.findById(id)

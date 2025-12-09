@@ -57,6 +57,7 @@ public class Job {
     @OneToMany(mappedBy = "job_id", cascade = CascadeType.ALL)
     private List<JobApplication> job_applications = new ArrayList<>();
 
+    // constructors
     public Job() {
     }
 
@@ -74,6 +75,7 @@ public class Job {
         this.employer_id = employer_id;
     }
 
+    // getters and setters
     public String getTitle() {
         return title;
     }

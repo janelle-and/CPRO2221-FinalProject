@@ -41,8 +41,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-//    @NotBlank
-//    public String role;
 
     public enum Status {
         ACTIVE,
@@ -64,6 +62,7 @@ public class User {
     @ManyToMany(mappedBy = "student_id")
     private List<JobApplication> job_application = new ArrayList<>();
 
+    // constructors
     public User() {
     }
 
@@ -80,6 +79,7 @@ public class User {
         this.job_application = job_application;
     }
 
+    // getters and setters
     public Long getUser_id() {
         return user_id;
     }
