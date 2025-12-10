@@ -1,11 +1,14 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
+import com.finalProject.campusJobBoardSystem.model.Job;
+import com.finalProject.campusJobBoardSystem.model.User;
 import com.finalProject.campusJobBoardSystem.service.ApplicationService;
 import com.finalProject.campusJobBoardSystem.service.JobService;
 import com.finalProject.campusJobBoardSystem.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -24,14 +27,42 @@ public class AdminController {
     // View all user accounts (make it so they can activate/deactivate user accounts from here? need to make another method?)
     @GetMapping("/users")
     public String users(Model model) {
-        model.addAttribute("user", userService.findAll());
-        return "users-list";
+        model.addAttribute("users", userService.findAll());
+        return "userManagement";
     }
 
-    // View all job postings (make it so they can approve/reject user accounts from here? need to make another method?)
+    // Activate a user
+    @GetMapping("/activate/{id}")
+    public String activateUser(@PathVariable Long id) {
+        userService.findById(id).setStatus(User.Status.ACTIVE);
+        return "redirect:/myJobs";
+    }
+
+    // deactivate a user
+    @GetMapping("/deactivate/{id}")
+    public String deactivateUser(@PathVariable Long id) {
+        userService.findById(id).setStatus(User.Status.INACTIVE);
+        return "redirect:/myJobs";
+    }
+
+    // View all job postings (make it so they can approve/reject jobs from here? need to make another method?)
     @GetMapping("/jobs")
     public String jobs(Model model) {
-        model.addAttribute("items", jobService.findAll());
-        return "jobs-list";
+        model.addAttribute("jobs", jobService.findAll());
+        return "jobApproval";
+    }
+
+    // Approve a job
+    @GetMapping("/approve/{id}")
+    public String approveJob(@PathVariable Long id) {
+        jobService.findById(id).setStatus(Job.Status.APPROVED);
+        return "redirect:/myJobs";
+    }
+
+    // Reject a job
+    @GetMapping("/reject/{id}")
+    public String rejectJob(@PathVariable Long id) {
+        jobService.findById(id).setStatus(Job.Status.REJECTED);
+        return "redirect:/myJobs";
     }
 }

@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 
-// might need to replace some return names when we make thymeleaf pages
-
 @Controller
-@RequestMapping("/employer")
+@RequestMapping("/Employer")
 public class EmployerController {
     private final JobService jobService;
     private final ApplicationService jobAppService;
@@ -26,19 +24,19 @@ public class EmployerController {
     }
 
 
-    // need this?
-    // View all job postings
+
+    // View employer's job postings
     @GetMapping("/jobs")
     public String jobs(Model model) {
-        model.addAttribute("items", jobService.findAll());
-        return "jobs-list";
+        model.addAttribute("jobs", jobService.findAll());
+        return "myJobs";
     }
 
     // Create new Job posting
     @GetMapping("/new")
     public String showForm(Model model) {
         model.addAttribute("job", new Job());
-        return "job-form";
+        return "editJob";
     }
 
     // Save new job posting
@@ -46,10 +44,10 @@ public class EmployerController {
     public String saveItem(@Valid @ModelAttribute("job") Job job,
                            BindingResult result) {
         if (result.hasErrors()) {
-            return "job-form";
+            return "editJob";
         }
         jobService.save(job);
-        return "redirect:/jobs-list";
+        return "redirect:/myJobs";
     }
 
     // Edit job posting
@@ -58,24 +56,24 @@ public class EmployerController {
         Job job = jobService.findById(id);
 
         if (job == null) {
-            return "redirect:/jobs-list";
+            return "redirect:/myJobs";
         }
 
         model.addAttribute("job", job);
-        return "job-form";
+        return "editJob";
     }
 
     // Delete job posting
     @GetMapping("/delete/{id}")
     public String deleteItem(@PathVariable Long id) {
         jobService.deleteById(id);
-        return "redirect:/jobs-list";
+        return "redirect:/myJobs";
     }
 
     // View posting applications submitted by students
     @GetMapping("/applications")
     public String jobApplications(Model model){
         model.addAttribute("applications", jobAppService.findAll());
-        return "applications-list";
+        return "viewApplicants";
     }
 }

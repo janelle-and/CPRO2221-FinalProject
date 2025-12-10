@@ -1,12 +1,14 @@
 package com.finalProject.campusJobBoardSystem.service;
 
-import com.finalProject.campusJobBoardSystem.model.User;
-import com.finalProject.campusJobBoardSystem.repository.UserRepository;
-import org.springframework.security.core.userdetails.*;
+import java.util.List;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.finalProject.campusJobBoardSystem.model.User;
+import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 
 
 @Service
@@ -38,9 +40,9 @@ public class AdminService implements UserDetailsService {
         }
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getFull_name())
+                .withUsername(user.getFullName())
                 .password(user.getPassword())
-                .roles(user.getRole().toString().replace("ADMIN", ""))
+                .roles(user.getRole().toString())
                 .disabled(user.getStatus() == User.Status.INACTIVE)
                 .build();
     }
