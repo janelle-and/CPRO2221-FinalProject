@@ -29,7 +29,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers( "/home","/login", "/register","/error").permitAll()
                     .requestMatchers("/jobList", "/jobDetails","/apply").hasRole("STUDENT")
-                    // ** is used to
+                    // ** is used to have access to all the sub files (like view application and then search by id)
                     .requestMatchers("/myJobs", "/addJob","/editJob","viewApplicants/**").hasRole("EMPLOYER")
                     .requestMatchers("/jobApproval","/userManagment").hasRole("ADMIN")
             )
