@@ -1,6 +1,5 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
-import com.finalProject.campusJobBoardSystem.model.Job;
 import com.finalProject.campusJobBoardSystem.model.JobApplication;
 import com.finalProject.campusJobBoardSystem.service.ApplicationService;
 import com.finalProject.campusJobBoardSystem.service.JobService;
@@ -23,12 +22,26 @@ public class StudentController {
         this.jobAppService = jobAppService;
     }
 
-    // View (admin approved) Detailed Job descriptions  ( there is how to add a search in the lostfound secure example )
-    @GetMapping("/jobs")
+    // View (admin approved) Detailed Job descriptions  ( there is how to add a search in the lost found secure example )
+    @GetMapping("/job") //jobList?
     public String jobs(Model model) {
 
         model.addAttribute("items", jobService.findAll());
         return "jobList";
+    }
+// list + search
+    @GetMapping
+    public String jobItems(
+        @RequestParam(value = "keyword", required = false) String keyword, Model model){
+
+            if (keyword != null && !keyword.isEmpty()) {
+                model.addAttribute("job", jobService.search(keyword));
+                model.addAttribute("keyword", keyword);
+            } else {
+                model.addAttribute("job", jobService.findAll());
+            }
+
+            return "items-list";
     }
 
     // Apply for a job (need to make sure they can only apply for a job once)
@@ -49,7 +62,7 @@ public class StudentController {
     public String saveItem(@Valid @ModelAttribute("job") JobApplication jobApp,
                            BindingResult result) {
         if (result.hasErrors()) {
-            return "jobApplication";
+            return "jobApplication"; // apply?
         }
         jobAppService.save(jobApp);
         return "redirect:/jobList";
