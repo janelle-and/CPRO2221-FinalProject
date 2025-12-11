@@ -29,10 +29,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers( "/home","/login", "/register","/error").permitAll()
-                    .requestMatchers("/jobList", "/jobDetails","/apply").hasRole("STUDENT")
+                    .requestMatchers("/jobList/**", "/jobDetails/**","/apply/**").hasRole("STUDENT")
                     // ** is used to have access to all the sub files (like view application and then search by id)
-                    .requestMatchers("/myJobs", "/addJob","/editJob","/viewApplicants/**").hasRole("EMPLOYER")
-                    .requestMatchers("/jobApproval","/userManagement").hasRole("ADMIN")
+                    .requestMatchers("/myJobs/**", "/addJob","/editJob/**","/viewApplicants/**").hasRole("EMPLOYER")
+                    .requestMatchers("/jobApproval/**","/userManagement/**").hasRole("ADMIN")
             )
             .formLogin(login -> login
                     .loginPage("/login")

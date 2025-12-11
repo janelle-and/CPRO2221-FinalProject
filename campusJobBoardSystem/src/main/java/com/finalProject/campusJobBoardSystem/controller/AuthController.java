@@ -18,6 +18,10 @@ public class AuthController {
         this.repo = repo;
         this.encoder = encoder;
     }
+    @GetMapping("/home")
+    public String home(Model model) {
+        return "home";
+    }
 
     @GetMapping("/login")
     public String login(){

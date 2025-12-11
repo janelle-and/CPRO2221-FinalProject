@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container" style="max-width: 100%;">
+        <a class="navbar-brand" th:href="@{/jobList}"></a>
+        <div class="d-flex">
+<!--            Visible to everyone -->
+            <a class="btn btn-light me-2" th:href="@{/home}">Home</a>
+<!--            Visible to everyone-->
+            <a class="btn btn-light me-2" th:href="@{/login}">Login</a>
+<!--            Visible to everyone-->
+            <a class="btn btn-light me-2" th:href="@{/register}">Register</a>
+<!--            Visible to STUDENT-->
+            <a class="btn btn-light me-2" th:href="@{/apply}">My Applications</a>
+<!--            visible to ADMIN-->
+            <a class="btn btn-light me-2" th:href="@{/jobApproval}">Job Approvals</a>
+<!--Visible to STUDENTS-->
+            <a class="btn btn-light me-2" th:href="@{jobList}">Job Listings</a>
+<!--Visible to EMPLOYER-->
+            <a class="btn btn-light me-2" th:href="@{myJobs}">My Job Postings</a>
+<!--visible to ADMIN-->
+            <a class="btn btn-light me-2" th:href="@{/userManagemnt}">Manage Users</a>
+<!--visible by EMPLOYER-->
+            <a class="btn btn-light me-2" th:href="@{/viewApplicants}">Applicants</a>
+<!--            should only show when user is logged in -->
+            <a class="btn btn-light me-2" sec:authorize="isAuthenticated()"  th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</nav>
 </html>
