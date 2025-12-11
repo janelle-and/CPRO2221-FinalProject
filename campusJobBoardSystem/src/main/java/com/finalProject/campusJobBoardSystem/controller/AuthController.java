@@ -19,7 +19,7 @@ public class AuthController {
         this.encoder = encoder;
     }
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home() {
         return "home";
     }
 
@@ -28,19 +28,19 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/studentRegister")
+    @GetMapping("/register/student")
     public String registerStudent(Model model){
         model.addAttribute("user", new User());
         return "register";
     }
 
-    @GetMapping("/employerRegister")
+    @GetMapping("/register/employer")
     public String registerEmployer(Model model){
         model.addAttribute("user", new User());
         return "register";
     }
 
-    @PostMapping("/studentRegister")
+    @PostMapping("/register/student")
     public String studentRegister(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole(User.Role.STUDENT);
@@ -48,7 +48,7 @@ public class AuthController {
         repo.save(user);
         return "redirect:/login?registered";
     }
-    @PostMapping("/employerRegister")
+    @PostMapping("/register/employer")
     public String employerRegister(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole(User.Role.EMPLOYER);
