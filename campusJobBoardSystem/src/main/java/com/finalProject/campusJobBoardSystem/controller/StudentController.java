@@ -28,7 +28,7 @@ public class StudentController {
     public String jobs(Model model) {
 
         model.addAttribute("items", jobService.findAll());
-        return "jobs-list";
+        return "jobList";
     }
 
     // Apply for a job (need to make sure they can only apply for a job once)
@@ -37,11 +37,11 @@ public class StudentController {
         Optional<JobApplication> jobApp = jobAppService.findById(id);
 
         if (jobApp == null) {
-            return "redirect:/jobs-list";
+            return "redirect:/jobList";
         }
 
         model.addAttribute("jobApplication", jobApp);
-        return "job-application";
+        return "jobApplication";
     }
 
     // Save job application
@@ -49,9 +49,9 @@ public class StudentController {
     public String saveItem(@Valid @ModelAttribute("job") JobApplication jobApp,
                            BindingResult result) {
         if (result.hasErrors()) {
-            return "job-application";
+            return "jobApplication";
         }
         jobAppService.save(jobApp);
-        return "redirect:/jobs-list";
+        return "redirect:/jobList";
     }
 }
