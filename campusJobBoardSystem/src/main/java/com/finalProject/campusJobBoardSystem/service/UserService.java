@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.finalProject.campusJobBoardSystem.model.User;
 import com.finalProject.campusJobBoardSystem.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly=true)
