@@ -14,7 +14,7 @@ public class JobApplication {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long application_id;
 
-    @NotBlank
+    @NotBlank(message = "Status Is Required")
     public enum Status{
         SUBMITTED,
         APPROVED,

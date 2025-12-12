@@ -12,11 +12,13 @@ import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {
+
     private final UserRepository repo;
 
     public UserService(UserRepository userRepository) {
         this.repo = userRepository;
     }
+// finds all users
 
     public List<User> findAll() {
         return repo.findAll();
@@ -25,11 +27,11 @@ public class UserService implements UserDetailsService {
     public User save(User user) {
         return repo.save(user);
     }
-
+// finds by ID and throws runtime exception if no user found
     public User findById(Long id) {
         return repo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found: " + id));
     }
-
+// finds user by email
     public User findByEmail(String email) {
         return repo.findByEmail(email);
     }

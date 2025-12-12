@@ -21,18 +21,17 @@ public class User {
     private Long user_id;
 
     @NotBlank
-    @Size(max=100)
+    @Size(max=100, message = "Full Name cannot be over 100 characters")
     private String full_name;
 
-    @NotBlank
-    @Email
-    @Size(max=100)
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Invalid Email, enter valid Email")
+    @Size(max=100, message = "Email cannot be over 100 characters")
     private String email;
 
-    @NotBlank
-    @Size(max=255)
+    @NotBlank(message = "Password cannot be empty")
+    @Size(max=255, message = "Password cannot be over 255 characters")
     private String password;
-
 
     public enum Role {
         STUDENT,
@@ -40,7 +39,7 @@ public class User {
         ADMIN
     }
 
-    @NotNull
+    @NotNull(message = "Role cannot be Null")
     @Enumerated(EnumType.STRING)
     private Role role;
 
