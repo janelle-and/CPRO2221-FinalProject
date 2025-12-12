@@ -13,7 +13,4 @@ import com.finalProject.campusJobBoardSystem.model.Job;
 public interface JobRepository extends JpaRepository<Job,Long> {
     List<Job> findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(String title, String location);
     List<Job> findByStatus(Job.Status status);
-
-    @Query("SELECT j FROM Job j WHERE j.status = :status AND (LOWER(j.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(j.location) LIKE LOWER(CONCAT('%', :keyword, '%')))")
-    List<Job> findApprovedJobsByKeyword(@Param("status") Job.Status status, @Param("keyword") String keyword);
 }

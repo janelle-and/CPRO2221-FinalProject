@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,7 +33,7 @@ public class StudentController {
                 model.addAttribute("jobs", jobService.search(keyword));
                 model.addAttribute("keyword", keyword);
             } else {
-                model.addAttribute("jobs", jobService.findAllAdminApproved());
+                model.addAttribute("jobs", jobService.findAll());
             }
 
             return "jobList";
@@ -51,18 +52,26 @@ public class StudentController {
         return "jobDetails";
     }
 
-    // Apply for a job (need to make sure they can only apply for a job once)
-    @GetMapping("/apply/{id}")
-    public String apply(@PathVariable Long id, Model model){
-        Optional<JobApplication> jobApp = jobAppService.findById(id);
-
-        if (jobApp == null) {
-            return "redirect:/jobList";
-        }
-
-        model.addAttribute("jobApplication", jobApp);
+    // View applications (make only students jobs applied to)
+    @GetMapping("/apply")
+    public String apply(Model model){
+        List<Job> jobs = jobService.findAll();
+        model.addAttribute("jobs", jobs);
         return "apply";
     }
+
+    // Apply for a job (need to make sure they can only apply for a job once)
+//    @GetMapping("/apply/{id}")
+//    public String apply(@PathVariable Long id, Model model){
+//        Optional<JobApplication> jobApp = jobAppService.findById(id);
+//
+//        if (jobApp == null) {
+//            return "redirect:/jobList";
+//        }
+//
+//        model.addAttribute("jobApplication", jobApp);
+//        return "apply";
+//    }
 
     // Save job application
     @PostMapping("myJobs/jobs/{id}/save")

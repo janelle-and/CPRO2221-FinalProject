@@ -32,17 +32,19 @@ public class AdminController {
     }
 
     // Activate a user
-    @GetMapping("userManagement/activate/{id}")
+    @GetMapping("/userManagement/activate/{id}")
     public String activateUser(@PathVariable Long id) {
         userService.findById(id).setStatus(User.Status.ACTIVE);
-        return "redirect:/myJobs";
+        userService.save(userService.findById(id));
+        return "redirect:/userManagement";
     }
 
     // deactivate a user
-    @GetMapping("userManagement/deactivate/{id}")
+    @GetMapping("/userManagement/deactivate/{id}")
     public String deactivateUser(@PathVariable Long id) {
         userService.findById(id).setStatus(User.Status.INACTIVE);
-        return "redirect:/myJobs";
+        userService.save(userService.findById(id));
+        return "redirect:/userManagement";
     }
 
     // View all job postings (make it so they can approve/reject jobs from here? need to make another method?)
@@ -53,16 +55,18 @@ public class AdminController {
     }
 
     // Approve a job
-    @GetMapping("jobApproval/approve/{id}")
+    @GetMapping("/jobApproval/approve/{id}")
     public String approveJob(@PathVariable Long id) {
         jobService.findById(id).setStatus(Job.Status.APPROVED);
-        return "redirect:/myJobs";
+        jobService.save(jobService.findById(id));
+        return "redirect:/jobApproval";
     }
 
     // Reject a job
-    @GetMapping("jobApproval/reject/{id}")
+    @GetMapping("/jobApproval/reject/{id}")
     public String rejectJob(@PathVariable Long id) {
         jobService.findById(id).setStatus(Job.Status.REJECTED);
-        return "redirect:/myJobs";
+        jobService.save(jobService.findById(id));
+        return "redirect:/jobApproval";
     }
 }

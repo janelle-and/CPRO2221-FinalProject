@@ -49,7 +49,7 @@
 
                         <!--Data Rows-->
                         <tbody>
-                        <tr th:each="job : ${jobs}">
+                        <tr th:each="job : ${jobs}" th:if="job.status.equals(Job.Status.APPROVED)">
                         <!--title -->
                             <td>
                                 <strong th:text="${job.name}"></strong>

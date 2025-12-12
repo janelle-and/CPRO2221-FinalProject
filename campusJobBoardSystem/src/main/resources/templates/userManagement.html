@@ -60,12 +60,12 @@
                     <span th:text="${user.updated_at}"></span>
                 </td>
                 <td class="text-end">
-                    <a th:href="@{'/activate/' + ${user.user_id}}"
+                    <a th:href="@{'/userManagement/activate/' + ${user.user_id}}"
                        class="btn btn-sm btn-outline-secondary">
                         Activate
                     </a>
 
-                    <a th:href="@{'/deactivate/' + ${user.user_id}}"
+                    <a th:href="@{'/userManagement/deactivate/' + ${user.user_id}}"
                        class="btn btn-sm btn-outline-danger ms-1">
                         Deactivate
                     </a>

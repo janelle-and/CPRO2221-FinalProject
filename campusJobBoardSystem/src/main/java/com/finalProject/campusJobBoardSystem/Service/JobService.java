@@ -34,11 +34,8 @@ private final JobRepository jobRepo;
                 .orElseThrow(() -> new RuntimeException("Job Not Found: " + id));
     }
 
-    // public List<Job> search(String keyword) {
-    //     return jobRepo
-    //             .findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(keyword, keyword);
-    // }
     public List<Job> search(String keyword) {
-        return jobRepo.findApprovedJobsByKeyword(Job.Status.APPROVED, keyword);
+        return jobRepo.findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(keyword,keyword);
     }
+
 }

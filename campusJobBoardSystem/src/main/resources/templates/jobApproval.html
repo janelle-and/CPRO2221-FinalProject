@@ -73,12 +73,12 @@
 
                 <!-- ACTION BUTTONS -->
                 <td class="text-end">
-                    <a th:href="@{'/approve/' + ${job.job_id}}"
+                    <a th:href="@{'/jobApproval/approve/' + ${job.job_id}}"
                        class="btn btn-sm btn-outline-secondary">
                         Approve
                     </a>
 
-                    <a th:href="@{'/reject/' + ${job.job_id}}"
+                    <a th:href="@{'/jobApproval/reject/' + ${job.job_id}}"
                        class="btn btn-sm btn-outline-danger ms-1">
                         Reject
                     </a>
