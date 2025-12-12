@@ -31,7 +31,6 @@
                         <th scope="col">Job Title</th>
                         <th scope="col">Salary</th>
                         <th scope="col">Deadline</th>
-                        <th scope="col">Status</th>
                         <th scope="col" class="col-3 text-end"> </th>
                     </tr>
                     </thead>
@@ -52,10 +51,6 @@
                         <!--deadline-->
                         <td>
                             <span th:text="${job.deadline}"></span>
-                        </td>
-                        <!-- status -->
-                        <td>
-                            <span th:text="${job.status}"></span>
                         </td>
                         <td class="text-end">
                             <a th:href="@{'/jobDetail/' + ${job.job_id}}" class="btn btn-small btn-outline-secondary">View Listing</a>

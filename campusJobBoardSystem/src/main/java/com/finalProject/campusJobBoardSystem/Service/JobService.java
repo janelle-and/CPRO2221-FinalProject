@@ -35,7 +35,7 @@ private final JobRepository jobRepo;
     }
 
     public List<Job> search(String keyword) {
-        return jobRepo.findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(keyword,keyword);
+        return jobRepo.findByTitleContainingIgnoreCaseAndStatus(keyword, Job.Status.APPROVED);
     }
 
 }
