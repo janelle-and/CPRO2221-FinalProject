@@ -1,17 +1,22 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
-import com.finalProject.campusJobBoardSystem.model.Job;
-import com.finalProject.campusJobBoardSystem.model.JobApplication;
-import com.finalProject.campusJobBoardSystem.model.User;
-import com.finalProject.campusJobBoardSystem.service.ApplicationService;
-import com.finalProject.campusJobBoardSystem.service.JobService;
-import com.finalProject.campusJobBoardSystem.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.finalProject.campusJobBoardSystem.model.Job;
+import com.finalProject.campusJobBoardSystem.model.User;
+import com.finalProject.campusJobBoardSystem.service.ApplicationService;
+import com.finalProject.campusJobBoardSystem.service.JobService;
+import com.finalProject.campusJobBoardSystem.service.UserService;
+
+import jakarta.validation.Valid;
 
 
 
@@ -46,8 +51,7 @@ public class EmployerController {
 
     // Save new job posting
     @PostMapping("/myJobs/save")
-    public String saveItem(@Valid @ModelAttribute("job") Job job,
-                           BindingResult result) {
+    public String saveItem(@Valid @ModelAttribute("job") Job job, BindingResult result) {
         if (result.hasErrors()) {
             return "editJob";
         }

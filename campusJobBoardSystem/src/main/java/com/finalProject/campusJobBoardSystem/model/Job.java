@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jdk.jfr.Timespan;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
@@ -55,10 +56,9 @@ public class Job {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
 
-    @DateTimeFormat
-    private Timestamp created_at =  new Timestamp(System.currentTimeMillis());
 
-    @DateTimeFormat
+    private Timestamp created_at =  new  Timestamp(System.currentTimeMillis());
+
     private Timestamp updated_at =   new Timestamp(System.currentTimeMillis());
 
     @OneToOne

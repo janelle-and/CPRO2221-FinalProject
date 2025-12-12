@@ -19,6 +19,7 @@ public class AuthController {
         this.repo = repo;
         this.encoder = encoder;
     }
+
     @GetMapping("/home")
     public String home() {
         return "home";
@@ -38,7 +39,6 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
-//        user.setRole(User.Role.STUDENT);
         user.setStatus(User.Status.ACTIVE);
         repo.save(user);
         return "redirect:/login?registered";

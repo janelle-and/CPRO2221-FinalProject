@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -30,7 +32,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/home", "/login", "/register", "/error").permitAll()
-                        .requestMatchers("/jobList/**", "/apply/**").hasRole("STUDENT")
+                        .requestMatchers("/jobList/**","/jobDetails/**", "/application/**", "/apply/**").hasRole("STUDENT")
                         // ** is used to have access to all the sub files (like view application and then search by id)
                         .requestMatchers("/myJobs/**", "/viewApplicants/**").hasRole("EMPLOYER")
                         .requestMatchers("/userManagement/**", "/jobApproval/**").hasRole("ADMIN")
