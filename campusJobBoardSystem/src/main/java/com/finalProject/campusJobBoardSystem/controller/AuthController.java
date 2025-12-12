@@ -1,14 +1,13 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
+import com.finalProject.campusJobBoardSystem.model.User;
+import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import com.finalProject.campusJobBoardSystem.model.User;
-import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 
 @Controller
 public class AuthController {
@@ -19,7 +18,8 @@ public class AuthController {
         this.repo = repo;
         this.encoder = encoder;
     }
-    @GetMapping("/home")    public String home(Model model) {
+    @GetMapping("/home")
+    public String home() {
         return "home";
     }
 
@@ -34,28 +34,10 @@ public class AuthController {
         return "register";
     }
 
-
-    @PostMapping("/studentRegister")
-    public String studentRegister(@ModelAttribute User user){
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole(User.Role.STUDENT);
-        user.setStatus(User.Status.ACTIVE);
-        repo.save(user);
-        return "redirect:/login?registered";
-    }
-
-    @PostMapping("/employerRegister")
-    public String employerRegister(@ModelAttribute User user){
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole(User.Role.EMPLOYER);
-        user.setStatus(User.Status.ACTIVE);
-        repo.save(user);
-        return "redirect:/login?registered";
-    }
-
     @PostMapping("/register")
     public String register(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setRole(User.Role.STUDENT);
         user.setStatus(User.Status.ACTIVE);
         repo.save(user);
         return "redirect:/login?registered";
