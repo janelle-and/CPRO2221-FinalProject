@@ -1,11 +1,11 @@
 package com.finalProject.campusJobBoardSystem.service;
 
-import com.finalProject.campusJobBoardSystem.model.Job;
-import com.finalProject.campusJobBoardSystem.model.JobApplication;
-import com.finalProject.campusJobBoardSystem.repository.JobRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.finalProject.campusJobBoardSystem.model.Job;
+import com.finalProject.campusJobBoardSystem.repository.JobRepository;
 
 @Service
 public class JobService {
@@ -19,6 +19,10 @@ private final JobRepository jobRepo;
         return jobRepo.findAll();
     }
 
+    public List<Job> findAllAdminApproved() {
+        return jobRepo.findByStatus(Job.Status.APPROVED);
+    }
+
     public Job save(Job job) {
         return jobRepo.save(job);
     }
@@ -30,9 +34,11 @@ private final JobRepository jobRepo;
                 .orElseThrow(() -> new RuntimeException("Job Not Found: " + id));
     }
 
-    public List<JobApplication> search(String keyword) {
-        return jobRepo
-                .findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(keyword, keyword);
+    // public List<Job> search(String keyword) {
+    //     return jobRepo
+    //             .findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(keyword, keyword);
+    // }
+    public List<Job> search(String keyword) {
+        return jobRepo.findApprovedJobsByKeyword(Job.Status.APPROVED, keyword);
     }
-
 }

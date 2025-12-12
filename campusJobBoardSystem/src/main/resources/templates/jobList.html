@@ -10,18 +10,18 @@
 
 <div th:replace="fragments/header :: navbar"></div>
 
-<div class="container mt-5" style="max-width: 90%px">
+<div class="container mt-5" style="max-width: 90%">
     <div class="card shadow p-4">
         <h2 class="fw-bold text-center mb-2" >Job List</h2>
 <!--    Search Bar -->
-        <form class="row g-2 mb-3" method="get" th:action="@{/jobList}">
+        <form class="row g-2 mb-3" method="get" th:action="@{/student/jobs}">
             <div class="col-md-6 col-sm-8">
                 <input type="search" class="form-control" placeholder="Search by Job Title...." name="keyword"
                 th:value="${keyword}">
             </div>
             <div class="col-md-6 col-sm-4 d-flex">
                 <button type="submit" class="btn btn-primary">Search</button>
-                <a th:href="@{/jobList}" class="btn btn-secondary">Reset</a>
+                <a th:href="@{/student/jobList}" class="btn btn-secondary">Reset</a>
             </div>
         </form>
 
@@ -75,11 +75,11 @@
                                 <span th:text="${job.deadline}"></span>
                             </td>
                             <td class="text-end">
-                                <a th:href="@{'/jobDetail/' + ${job.id}}" class="btn btn-small btn-outline-secondary">Details</a>
+                                <a th:href="@{'/jobDetails/' + ${job.id}}" class="btn btn-small btn-outline-secondary">Details</a>
                                 <a th:href="@{'/apply/'+ ${job.id}}" class="btn btn small btn-outline-info">Apply</a>
                             </td>
                         </tr>
-                        <tr th: if="${jobs.isEmpty()} ==0">
+                        <tr th:if="${jobs.isEmpty()} ==0">
                             <td colspan="7" class="text-center">
                                 <div>No Job Listings Currently Available</div>
                                 <div class="small text-muted">

@@ -1,5 +1,6 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
+import com.finalProject.campusJobBoardSystem.model.Job;
 import com.finalProject.campusJobBoardSystem.model.JobApplication;
 import com.finalProject.campusJobBoardSystem.service.ApplicationService;
 import com.finalProject.campusJobBoardSystem.service.JobService;
@@ -22,26 +23,32 @@ public class StudentController {
         this.jobAppService = jobAppService;
     }
 
-    // View (admin approved) Detailed Job descriptions  ( there is how to add a search in the lost found secure example )
-    @GetMapping("/job") //jobList?
-    public String jobs(Model model) {
-
-        model.addAttribute("items", jobService.findAll());
-        return "jobList";
-    }
-// list + search
-    @GetMapping
-    public String jobItems(
+    // View (admin approved) jobs  + search
+    @GetMapping("/jobs")
+    public String jobs(
         @RequestParam(value = "keyword", required = false) String keyword, Model model){
 
             if (keyword != null && !keyword.isEmpty()) {
-                model.addAttribute("job", jobService.search(keyword));
+                model.addAttribute("jobs", jobService.search(keyword));
                 model.addAttribute("keyword", keyword);
             } else {
-                model.addAttribute("job", jobService.findAll());
+                model.addAttribute("jobs", jobService.findAllAdminApproved());
             }
 
-            return "items-list";
+            return "jobList";
+    }
+
+    // View job details
+    @GetMapping("/jobDetails/{id}")
+    public String jobDetails(@PathVariable Long id, Model model){
+        Job job = jobService.findById(id);
+
+        if (job == null) {
+            return "redirect:/jobList";
+        }
+
+        model.addAttribute("job", job);
+        return "jobDetails";
     }
 
     // Apply for a job (need to make sure they can only apply for a job once)
@@ -54,15 +61,15 @@ public class StudentController {
         }
 
         model.addAttribute("jobApplication", jobApp);
-        return "jobApplication";
+        return "apply";
     }
 
     // Save job application
     @PostMapping("/jobs/{id}/save")
-    public String saveItem(@Valid @ModelAttribute("job") JobApplication jobApp,
+    public String saveJob(@Valid @ModelAttribute("job") JobApplication jobApp,
                            BindingResult result) {
         if (result.hasErrors()) {
-            return "jobApplication"; // apply?
+            return "apply";
         }
         jobAppService.save(jobApp);
         return "redirect:/jobList";
