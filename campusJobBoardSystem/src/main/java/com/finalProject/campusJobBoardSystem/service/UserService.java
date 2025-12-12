@@ -11,6 +11,7 @@ import com.finalProject.campusJobBoardSystem.model.User;
 import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 
 @Service
+@Transactional(readOnly=true)
 public class UserService implements UserDetailsService {
 
     private final UserRepository repo;
@@ -23,7 +24,8 @@ public class UserService implements UserDetailsService {
     public List<User> findAll() {
         return repo.findAll();
     }
-
+// saves user
+    @Transactional // overrides the read only
     public User save(User user) {
         return repo.save(user);
     }
@@ -37,6 +39,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
