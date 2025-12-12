@@ -49,13 +49,6 @@ public class StudentController {
             return "jobList";
     }
 
-    // View (admin approved) jobs
-//    @GetMapping("/jobList")
-//    public String jobs(Model model){
-//        model.addAttribute("jobs", jobService.findAllAdminApproved());
-//        return "jobList";
-//    }
-
     // View job details
     @GetMapping("/jobDetails/{id}")
     public String jobDetails(@PathVariable Long id, Model model){
@@ -69,7 +62,7 @@ public class StudentController {
         return "jobDetails";
     }
 
-    // View applications
+    // View student's applications
     @GetMapping("/apply")
     public String apply(Model model){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -77,15 +70,15 @@ public class StudentController {
         List<JobApplication> applications = jobAppService.findByStudent(student);
         List<Job> jobs = new ArrayList<>();
         for(JobApplication ja : applications){
-            jobs.add(jobService.findById(ja.getJobBy_id().getJob_id()));
+            jobs.add(jobService.findById(ja.getJob_id().getJob_id()));
         }
         model.addAttribute("jobs", jobs);
         return "apply";
     }
 
-    // Save job application (make only students jobs applied to)
+    // Save job application (make it so student can only apply once)
     @GetMapping("/apply/{id}")
-    public String saveJob(@PathVariable Long id, @Valid @ModelAttribute("jobApp") JobApplication jobApp,
+    public String saveApplication(@PathVariable Long id, @Valid @ModelAttribute("jobApp") JobApplication jobApp,
                            BindingResult result) {
         if (result.hasErrors()) {
             return "apply";
@@ -93,6 +86,12 @@ public class StudentController {
         Job job = jobService.findById(id);
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User student = userService.findByEmail(email);
+        List<JobApplication> applications = jobAppService.findByStudent(student);
+        for (JobApplication ja : applications){
+            if(ja.getJob_id().getJob_id().equals(job.getJob_id())){
+                return "redirect:/jobList";
+            }
+        }
         jobApp.setJob_id(job);
         jobApp.getStudent_id().add(student);
         jobAppService.save(jobApp);

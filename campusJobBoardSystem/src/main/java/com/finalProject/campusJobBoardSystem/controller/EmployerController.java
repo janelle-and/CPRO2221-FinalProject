@@ -1,5 +1,8 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
+import com.finalProject.campusJobBoardSystem.model.JobApplication;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,8 @@ import com.finalProject.campusJobBoardSystem.service.UserService;
 
 import jakarta.validation.Valid;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -33,12 +38,13 @@ public class EmployerController {
         this.userService = userService;
     }
 
-
-
     // View employer's job postings
     @GetMapping("/myJobs")
     public String jobs(Model model) {
-        model.addAttribute("jobs", jobService.findAll());
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User employer = userService.findByEmail(email);
+        List<Job> jobs = jobService.findByEmployer(employer);
+        model.addAttribute("jobs", jobs);
         return "myJobs";
     }
 
@@ -85,7 +91,18 @@ public class EmployerController {
     // View posting applications submitted by students
     @GetMapping("/viewApplicants")
     public String jobApplications(Model model){
-        model.addAttribute("applications", jobAppService.findAll());
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User employer = userService.findByEmail(email);
+        List<Job> jobs = jobService.findByEmployer(employer);
+        List<JobApplication> applications = new ArrayList<>();
+        for (Job job:jobs){
+            applications.addAll(jobAppService.findByJob(job));
+        }
+        List<User> students = new ArrayList<>();
+        for (JobApplication application:applications){
+            students.addAll(application.getStudent_id());
+        }
+        model.addAttribute("students", students);
         return "viewApplicants";
     }
 }

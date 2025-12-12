@@ -2,6 +2,7 @@ package com.finalProject.campusJobBoardSystem.service;
 
 import java.util.List;
 
+import com.finalProject.campusJobBoardSystem.model.User;
 import org.springframework.stereotype.Service;
 
 import com.finalProject.campusJobBoardSystem.model.Job;
@@ -32,6 +33,10 @@ private final JobRepository jobRepo;
     public Job findById(Long id) {
         return jobRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job Not Found: " + id));
+    }
+
+    public List<Job> findByEmployer(User employer) {
+        return jobRepo.findByEmployer(employer);
     }
 
     public List<Job> search(String keyword) {
