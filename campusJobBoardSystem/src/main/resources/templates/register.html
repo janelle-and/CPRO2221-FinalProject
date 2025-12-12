@@ -14,16 +14,20 @@
         <h3 class="text-center mb-3">Create Account</h3>
         <form th:action="@{/register}" th:object="${user}" method="post">
             <div class="mb-3">
-                <label for="full_name" class="form-label">Full Name</label>
-                <input type="text" class="form-control" th:field="*{fullName}" id="full_name" placeholder="Enter Full Name" required>
+                <label for="FullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" th:field="*{FullName}" id="FullName" placeholder="Enter Full Name" required>
+                <div th:if="${#fields.hasErrors('FullName')}" th:errors="*{FullName}"></div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Enter Email" required>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Enter Password" required>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             </div>
             <label for="role">Register As</label><select class="form-select" th:field="*{role}" id="role" required>
                 <option selected disabled value="">Select Role</option>

@@ -1,8 +1,10 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,7 @@ public class AuthController {
         return "login";
     }
 
+
     @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("user", new User());
@@ -37,7 +40,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user){
+    public String register(@Valid @ModelAttribute  User user, BindingResult result){
+        if(result.hasErrors()){
+            return "register";
+        }
         user.setPassword(encoder.encode(user.getPassword()));
         user.setStatus(User.Status.ACTIVE);
         repo.save(user);
