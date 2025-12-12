@@ -2,9 +2,12 @@ package com.finalProject.campusJobBoardSystem.controller;
 
 import com.finalProject.campusJobBoardSystem.model.Job;
 import com.finalProject.campusJobBoardSystem.model.JobApplication;
+import com.finalProject.campusJobBoardSystem.model.User;
 import com.finalProject.campusJobBoardSystem.service.ApplicationService;
 import com.finalProject.campusJobBoardSystem.service.JobService;
+import com.finalProject.campusJobBoardSystem.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class EmployerController {
     private final JobService jobService;
     private final ApplicationService jobAppService;
+    private final UserService userService;
 
-    public EmployerController(JobService jobService, ApplicationService jobAppService) {
+    public EmployerController(JobService jobService, ApplicationService jobAppService,UserService userService) {
         this.jobService = jobService;
         this.jobAppService = jobAppService;
+        this.userService = userService;
     }
 
 
@@ -33,25 +38,28 @@ public class EmployerController {
     }
 
     // Create new Job posting
-    @GetMapping("myJobs/new")
+    @GetMapping("/myJobs/new")
     public String showForm(Model model) {
         model.addAttribute("job", new Job());
         return "editJob";
     }
 
     // Save new job posting
-    @PostMapping("myJobs/save")
+    @PostMapping("/myJobs/save")
     public String saveItem(@Valid @ModelAttribute("job") Job job,
                            BindingResult result) {
         if (result.hasErrors()) {
             return "editJob";
         }
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.findByEmail(email);
+        job.setEmployer_id(currentUser);
         jobService.save(job);
         return "redirect:/myJobs";
     }
 
     // Edit job posting
-    @GetMapping("myJobs/edit/{id}")
+    @GetMapping("/myJobs/edit/{id}")
     public String editItem(@PathVariable Long id, Model model) {
         Job job = jobService.findById(id);
 
@@ -64,7 +72,7 @@ public class EmployerController {
     }
 
     // Delete job posting
-    @GetMapping("myJobs/delete/{id}")
+    @GetMapping("/myJobs/delete/{id}")
     public String deleteItem(@PathVariable Long id) {
         jobService.deleteById(id);
         return "redirect:/myJobs";

@@ -30,6 +30,10 @@ public class UserService implements UserDetailsService {
         return repo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found: " + id));
     }
 
+    public User findByEmail(String email) {
+        return repo.findByEmail(email);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
