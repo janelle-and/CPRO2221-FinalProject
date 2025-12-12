@@ -11,6 +11,6 @@ import com.finalProject.campusJobBoardSystem.model.Job;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job,Long> {
-    List<Job> findByTitleContainingIgnoreCaseOrLocationContainingIgnoreCase(String title, String location);
+    List<Job> findByTitleContainingIgnoreCaseAndStatus(String title, Job.Status status);
     List<Job> findByStatus(Job.Status status);
 }
