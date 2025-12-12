@@ -11,17 +11,17 @@
 <!--            Visible to everyone-->
             <a class="btn btn-light me-2" th:href="@{/register}">Register</a>
 <!--            Visible to STUDENT-->
-            <a class="btn btn-light me-2" sec:authorize="hasRole('STUDENT')" th:href="@{/apply}">My Applications</a>
+            <a class="btn btn-light me-2" sec:authorize="hasRole('STUDENT')" th:href="@{student/apply}">My Applications</a>
 <!--            visible to ADMIN-->
-            <a class="btn btn-light me-2" sec:authorize="hasRole('ADMIN')" th:href="@{/jobApproval}">Job Approvals</a>
+            <a class="btn btn-light me-2" sec:authorize="hasRole('ADMIN')" th:href="@{admin/jobs}">Job Approvals</a>
 <!--Visible to STUDENTS-->
-            <a class="btn btn-light me-2" sec:authorize="hasRole('STUDENT')"th:href="@{/jobList}">Job Listings</a>
+            <a class="btn btn-light me-2" sec:authorize="hasRole('STUDENT')" th:href="@{student/jobs}">Job Listings</a>
 <!--Visible to EMPLOYER-->
-            <a class="btn btn-light me-2" sec:authorize="hasRole('EMPLOYER')" th:href="@{/myJobs}">My Job Postings</a>
+            <a class="btn btn-light me-2" sec:authorize="hasRole('EMPLOYER')" th:href="@{employer/jobs}">My Job Postings</a>
 <!--visible to ADMIN-->
-            <a class="btn btn-light me-2" sec:authorize="hasRole('ADMIN')" th:href="@{/userManagemnt}">Manage Users</a>
+            <a class="btn btn-light me-2" sec:authorize="hasRole('ADMIN')" th:href="@{admin/users}">Manage Users</a>
 <!--visible by EMPLOYER-->
-            <a class="btn btn-light me-2" sec:authorize="hasRole('EMPLOYER')" th:href="@{/viewApplicants}">Applicants</a>
+            <a class="btn btn-light me-2" sec:authorize="hasRole('EMPLOYER')" th:href="@{employer/applications}">Applicants</a>
 <!--            should only show when user is logged in -->
             <a class="btn btn-light me-2" sec:authorize="isAuthenticated()"  th:href="@{/logout}">Logout</a>
         </div>

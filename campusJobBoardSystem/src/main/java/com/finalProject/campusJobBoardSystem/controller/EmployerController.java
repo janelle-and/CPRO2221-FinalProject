@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/Employer")
+@RequestMapping("/employer")
 public class EmployerController {
     private final JobService jobService;
     private final ApplicationService jobAppService;

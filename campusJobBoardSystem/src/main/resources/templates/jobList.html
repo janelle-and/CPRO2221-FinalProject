@@ -79,7 +79,7 @@
                                 <a th:href="@{'/apply/'+ ${job.id}}" class="btn btn small btn-outline-info">Apply</a>
                             </td>
                         </tr>
-                        <tr th:if="${jobs.isEmpty()} ==0">
+                        <tr th:if="${jobs.isEmpty()}">
                             <td colspan="7" class="text-center">
                                 <div>No Job Listings Currently Available</div>
                                 <div class="small text-muted">
