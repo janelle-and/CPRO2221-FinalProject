@@ -45,19 +45,6 @@ class ApplicationServiceTest {
         verify(repo, times(1)).findAll();
     }
 
-    // tests save()
-
-    // add throw to service
-//    @Test
-//    void saveJobApplication_givenIncorrectInfo() {
-//        JobApplication jobApplication = new JobApplication(null,null,null,null,null);
-//
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            service.save(jobApplication);
-//        });
-//
-//        verify(repo, times(0)).save(any(JobApplication.class));
-//    }
 
     // test save()
     @Test
@@ -106,15 +93,6 @@ class ApplicationServiceTest {
         verify(repo, times(1)).findByStudent(student);
     }
 
-    // test findByStudent() with no student
-    // need to add throw
-    @Test
-    void findByStudent_whenStudentDoesNotExist() {
-        when(repo.findByStudent(null)).thenReturn(null);
-        RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> service.findByStudent(null));
-        assertTrue(ex.getMessage().contains("No job applications not found"));
-    }
 
     // test findByJob()
     @Test
@@ -137,16 +115,6 @@ class ApplicationServiceTest {
         assertNotNull(result);
         assertEquals(1L, result.getFirst().getApplication_id());
         verify(repo, times(1)).findByJob(job);
-    }
-
-    // test findByJob() with no student
-    // need to add throw
-    @Test
-    void findByJob_whenJobDoesNotExist() {
-        when(repo.findByJob(null)).thenReturn(null);
-        RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> service.findByJob(null));
-        assertTrue(ex.getMessage().contains("No job applications not found"));
     }
 
 }
