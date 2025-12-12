@@ -22,7 +22,7 @@ public class JobApplication {
     }
 
     @Enumerated(EnumType.STRING)
-    private Status status=Status.SUBMITTED;
+    private Status status = Status.SUBMITTED;
 
     private Timestamp start_time =  new Timestamp(System.currentTimeMillis());
 
