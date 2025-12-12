@@ -4,6 +4,7 @@ package com.finalProject.campusJobBoardSystem.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.finalProject.campusJobBoardSystem.model.Job;
 import org.springframework.stereotype.Service;
 
 import com.finalProject.campusJobBoardSystem.model.JobApplication;
@@ -33,6 +34,10 @@ public class ApplicationService{
 
     public List<JobApplication> findByStudent(User student) {
         return jobAppRepo.findByStudent(student);
+    }
+
+    public List<JobApplication> findByJob(Job job) {
+        return jobAppRepo.findByJob(job);
     }
 
     public void delete(JobApplication jobApp) {

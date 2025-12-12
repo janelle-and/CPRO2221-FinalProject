@@ -75,7 +75,7 @@ public class JobApplication {
         this.start_time = start_time;
     }
 
-    public Job getJobBy_id() {
+    public Job getJob_id() {
         return job_id;
     }
 
