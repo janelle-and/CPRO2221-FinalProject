@@ -43,17 +43,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-function updateFormAction() {
-    const role = document.getElementById('role').value;
-    const form = document.getElementById('registerForm');
-    if (role === 'STUDENT') {
-        form.action = '/studentRegister';
-    } else if (role === 'EMPLOYER') {
-        form.action = '/employerRegister';
-    }
-}
-</script>
-
 </body>
 </html>
