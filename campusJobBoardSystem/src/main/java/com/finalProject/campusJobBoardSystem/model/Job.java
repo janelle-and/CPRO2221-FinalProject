@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jdk.jfr.Category;
 import jdk.jfr.Timespan;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,19 +20,19 @@ public class Job {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long job_id;
 
-    @NotBlank
+    @NotBlank(message = "Title cannot be empty, please enter Title")
     @Size(max=100)
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Description cannot be empty, enter Description.")
     private String description;
 
-    @Size(max=100)
+    @Size(max=100, message = "Location cannot be over 100 characters")
     private String location;
 
     private double salary;
 
-    @Size(max=50)
+    @Size(max=50, message = "Category cannot be over 50 characters.")
     private String category;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
