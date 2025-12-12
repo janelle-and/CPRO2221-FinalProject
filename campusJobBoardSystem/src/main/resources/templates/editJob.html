@@ -9,8 +9,8 @@
 <body class="d-flex flex-column min-vh-100">
 <div th:replace="~{fragments/header :: navbar}"></div>
 <h2>Job Posting</h2>
-<div class="container mt-4">
-    <div class="card shadow p-4">
+<div class="container mt-4 mb-4">
+    <div class="card shadow p-4 mb-4">
 
         <h2 class="mb-4">Job Listing</h2>
 
@@ -60,8 +60,6 @@
                      th:errors="*{category}"></div>
             </div>
 
-
-
             <!-- DEADLINE -->
             <div class="mb-3">
                 <label class="form-label">Deadline</label>
@@ -80,9 +78,9 @@
             <a th:href="@{/myJobs}" class="btn btn-secondary ms-2">Cancel</a>
 
         </form>
-
     </div>
 </div>
+<br />
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 
