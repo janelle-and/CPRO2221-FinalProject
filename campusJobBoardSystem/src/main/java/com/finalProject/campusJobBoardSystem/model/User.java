@@ -4,19 +4,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -68,8 +59,8 @@ public class User {
     @DateTimeFormat
     private Timestamp updated_at =   new Timestamp(System.currentTimeMillis());
 
-    @OneToOne(mappedBy = "employer_id", cascade = CascadeType.ALL)
-    private Job job;
+    @OneToMany(mappedBy = "employer_id", cascade = CascadeType.ALL)
+    private List<Job> job = new ArrayList<>();
 
     @ManyToMany(mappedBy = "student_id")
     private List<JobApplication> job_application = new ArrayList<>();
@@ -78,7 +69,7 @@ public class User {
     public User() {
     }
 
-    public User(Long user_id, String full_name, String email, String password, Role role, Status status, Timestamp created_at, Timestamp updated_at, Job job, List<JobApplication> job_application) {
+    public User(Long user_id, String full_name, String email, String password, Role role, Status status, Timestamp created_at, Timestamp updated_at, List<JobApplication> job_application) {
         this.user_id = user_id;
         this.full_name = full_name;
         this.email = email;
@@ -87,7 +78,6 @@ public class User {
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.job = job;
         this.job_application = job_application;
     }
 
@@ -106,14 +96,6 @@ public class User {
 
     public void setJob_application(List<JobApplication> job_application) {
         this.job_application = job_application;
-    }
-
-    public Job getJob() {
-        return job;
-    }
-
-    public void setJob(Job job) {
-        this.job = job;
     }
 
     public Timestamp getCreated_at() {

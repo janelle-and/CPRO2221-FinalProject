@@ -42,7 +42,7 @@
 
                     <!-- Description -->
                     <td>
-                            <span th:text="${job.Description}"></span>
+                            <span th:text="${job.description}"></span>
                     </td>
                     <!-- Location -->
                     <td>
@@ -77,12 +77,12 @@
 
                     <!-- ACTION BUTTONS -->
                     <td class="text-end">
-                        <a th:href="@{'/edit/' + ${job.job_id}}"
+                        <a th:href="@{'myJobs/edit/' + ${job.job_id}}"
                            class="btn btn-sm btn-outline-secondary">
                             Edit
                         </a>
 
-                        <a th:href="@{'/delete/' + ${job.job_id}}"
+                        <a th:href="@{'myJobs/delete/' + ${job.job_id}}"
                            class="btn btn-sm btn-outline-danger ms-1"
                            onclick="return confirm('Are you sure you want to delete this item?');">
                             Delete

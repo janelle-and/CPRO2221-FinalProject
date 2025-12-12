@@ -1,14 +1,15 @@
 package com.finalProject.campusJobBoardSystem.service;
 
 
-import com.finalProject.campusJobBoardSystem.model.Job;
-import com.finalProject.campusJobBoardSystem.model.JobApplication;
-import com.finalProject.campusJobBoardSystem.repository.JobApplicationRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.finalProject.campusJobBoardSystem.model.Job;
+import org.springframework.stereotype.Service;
+
+import com.finalProject.campusJobBoardSystem.model.JobApplication;
+import com.finalProject.campusJobBoardSystem.model.User;
+import com.finalProject.campusJobBoardSystem.repository.JobApplicationRepository;
 
 @Service
 public class ApplicationService{
@@ -29,6 +30,14 @@ public class ApplicationService{
 
     public JobApplication save(JobApplication jobApp) {
         return jobAppRepo.save(jobApp);
+    }
+
+    public List<JobApplication> findByStudent(User student) {
+        return jobAppRepo.findByStudent(student);
+    }
+
+    public List<JobApplication> findByJob(Job job) {
+        return jobAppRepo.findByJob(job);
     }
 
     public void delete(JobApplication jobApp) {

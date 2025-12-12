@@ -1,5 +1,6 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,8 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalProject.campusJobBoardSystem.model.Job;
 import com.finalProject.campusJobBoardSystem.model.JobApplication;
@@ -35,25 +36,17 @@ public class StudentController {
     }
 
     // View (admin approved) jobs  + search
-//    @GetMapping("/jobList")
-//    public String jobs(
-//        @RequestParam(value = "keyword", required = false) String keyword, Model model){
-//
-//            if (keyword != null && !keyword.isEmpty()) {
-//                model.addAttribute("jobs", jobService.search(keyword));
-//                model.addAttribute("keyword", keyword);
-//            } else {
-//                model.addAttribute("jobs", jobService.findAll());
-//            }
-//
-//            return "jobList";
-//    }
-
-    // View (admin approved) jobs
     @GetMapping("/jobList")
-    public String jobs(Model model){
-        model.addAttribute("jobs", jobService.findAllAdminApproved());
-        return "jobList";
+    public String jobs(@RequestParam(value = "keyword", required = false) String keyword, Model model){
+
+            if (keyword != null && !keyword.isEmpty()) {
+                model.addAttribute("jobs", jobService.search(keyword));
+                model.addAttribute("keyword", keyword);
+            } else {
+                model.addAttribute("jobs", jobService.findAllAdminApproved());
+            }
+
+            return "jobList";
     }
 
     // View job details
@@ -69,17 +62,23 @@ public class StudentController {
         return "jobDetails";
     }
 
-    // View applications (make only students jobs applied to)
+    // View student's applications
     @GetMapping("/apply")
     public String apply(Model model){
-        List<Job> jobs = jobService.findAll();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User student = userService.findByEmail(email);
+        List<JobApplication> applications = jobAppService.findByStudent(student);
+        List<Job> jobs = new ArrayList<>();
+        for(JobApplication ja : applications){
+            jobs.add(jobService.findById(ja.getJob_id().getJob_id()));
+        }
         model.addAttribute("jobs", jobs);
         return "apply";
     }
 
-    // Save job application
+    // Save job application (make it so student can only apply once)
     @GetMapping("/apply/{id}")
-    public String saveJob(@PathVariable Long id, @Valid @ModelAttribute("jobApp") JobApplication jobApp,
+    public String saveApplication(@PathVariable Long id, @Valid @ModelAttribute("jobApp") JobApplication jobApp,
                            BindingResult result) {
         if (result.hasErrors()) {
             return "apply";
@@ -87,6 +86,12 @@ public class StudentController {
         Job job = jobService.findById(id);
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User student = userService.findByEmail(email);
+        List<JobApplication> applications = jobAppService.findByStudent(student);
+        for (JobApplication ja : applications){
+            if(ja.getJob_id().getJob_id().equals(job.getJob_id())){
+                return "redirect:/jobList";
+            }
+        }
         jobApp.setJob_id(job);
         jobApp.getStudent_id().add(student);
         jobAppService.save(jobApp);
