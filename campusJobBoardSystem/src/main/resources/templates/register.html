@@ -15,21 +15,21 @@
         <form th:action="@{/register}" th:object="${user}" method="post">
             <div class="mb-3">
                 <label for="FullName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" th:field="*{FullName}" id="FullName" placeholder="Enter Full Name" required>
+                <input type="text" class="form-control" th:field="*{FullName}" id="FullName" placeholder="Enter Full Name" required >
                 <div th:if="${#fields.hasErrors('FullName')}" th:errors="*{FullName}"></div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Enter Email" required>
-                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Enter Email" >
+                <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Enter Password" required>
-                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Enter Password" >
+                <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             </div>
-            <label for="role">Register As</label><select class="form-select" th:field="*{role}" id="role" required>
+            <label for="role">Register As</label><select class="form-select" th:field="*{role}" id="role" >
                 <option selected disabled value="">Select Role</option>
                 <option value="STUDENT">Student</option>
                 <option value="EMPLOYER">Employer</option>
