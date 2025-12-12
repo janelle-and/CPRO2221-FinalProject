@@ -1,13 +1,14 @@
 package com.finalProject.campusJobBoardSystem.controller;
 
-import com.finalProject.campusJobBoardSystem.model.User;
-import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.finalProject.campusJobBoardSystem.model.User;
+import com.finalProject.campusJobBoardSystem.repository.UserRepository;
 
 @Controller
 public class AuthController {
@@ -37,7 +38,7 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole(User.Role.STUDENT);
+//        user.setRole(User.Role.STUDENT);
         user.setStatus(User.Status.ACTIVE);
         repo.save(user);
         return "redirect:/login?registered";

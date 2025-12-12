@@ -34,14 +34,14 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        User user = repo.findByFullName(username);
+        User user = repo.findByEmail(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         // edit in future
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getFullName())
+                .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles(user.getRole().toString())
                 .disabled(user.getStatus() == User.Status.INACTIVE)

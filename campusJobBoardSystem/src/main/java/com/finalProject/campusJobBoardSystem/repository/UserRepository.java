@@ -9,4 +9,5 @@ import com.finalProject.campusJobBoardSystem.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByFullName(String FullName);
+    User findByEmail(String email);
 }
