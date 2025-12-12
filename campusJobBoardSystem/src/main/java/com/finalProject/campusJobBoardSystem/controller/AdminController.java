@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping
 public class AdminController {
     private final JobService jobService;
     private final ApplicationService jobAppService;
@@ -25,42 +25,42 @@ public class AdminController {
     }
 
     // View all user accounts (make it so they can activate/deactivate user accounts from here? need to make another method?)
-    @GetMapping("/users")
+    @GetMapping("/userManagement")
     public String users(Model model) {
         model.addAttribute("users", userService.findAll());
         return "userManagement";
     }
 
     // Activate a user
-    @GetMapping("/activate/{id}")
+    @GetMapping("userManagement/activate/{id}")
     public String activateUser(@PathVariable Long id) {
         userService.findById(id).setStatus(User.Status.ACTIVE);
         return "redirect:/myJobs";
     }
 
     // deactivate a user
-    @GetMapping("/deactivate/{id}")
+    @GetMapping("userManagement/deactivate/{id}")
     public String deactivateUser(@PathVariable Long id) {
         userService.findById(id).setStatus(User.Status.INACTIVE);
         return "redirect:/myJobs";
     }
 
     // View all job postings (make it so they can approve/reject jobs from here? need to make another method?)
-    @GetMapping("/jobs")
+    @GetMapping("/jobApproval")
     public String jobs(Model model) {
         model.addAttribute("jobs", jobService.findAll());
         return "jobApproval";
     }
 
     // Approve a job
-    @GetMapping("/approve/{id}")
+    @GetMapping("jobApproval/approve/{id}")
     public String approveJob(@PathVariable Long id) {
         jobService.findById(id).setStatus(Job.Status.APPROVED);
         return "redirect:/myJobs";
     }
 
     // Reject a job
-    @GetMapping("/reject/{id}")
+    @GetMapping("jobApproval/reject/{id}")
     public String rejectJob(@PathVariable Long id) {
         jobService.findById(id).setStatus(Job.Status.REJECTED);
         return "redirect:/myJobs";

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/employer")
+@RequestMapping
 public class EmployerController {
     private final JobService jobService;
     private final ApplicationService jobAppService;
@@ -26,21 +26,21 @@ public class EmployerController {
 
 
     // View employer's job postings
-    @GetMapping("/jobs")
+    @GetMapping("/myJobs")
     public String jobs(Model model) {
         model.addAttribute("jobs", jobService.findAll());
         return "myJobs";
     }
 
     // Create new Job posting
-    @GetMapping("/new")
+    @GetMapping("myJobs/new")
     public String showForm(Model model) {
         model.addAttribute("job", new Job());
         return "editJob";
     }
 
     // Save new job posting
-    @PostMapping("/save")
+    @PostMapping("myJobs/save")
     public String saveItem(@Valid @ModelAttribute("job") Job job,
                            BindingResult result) {
         if (result.hasErrors()) {
@@ -51,7 +51,7 @@ public class EmployerController {
     }
 
     // Edit job posting
-    @GetMapping("/edit/{id}")
+    @GetMapping("myJobs/edit/{id}")
     public String editItem(@PathVariable Long id, Model model) {
         Job job = jobService.findById(id);
 
@@ -64,14 +64,14 @@ public class EmployerController {
     }
 
     // Delete job posting
-    @GetMapping("/delete/{id}")
+    @GetMapping("myJobs/delete/{id}")
     public String deleteItem(@PathVariable Long id) {
         jobService.deleteById(id);
         return "redirect:/myJobs";
     }
 
     // View posting applications submitted by students
-    @GetMapping("/applications")
+    @GetMapping("/viewApplicants")
     public String jobApplications(Model model){
         model.addAttribute("applications", jobAppService.findAll());
         return "viewApplicants";

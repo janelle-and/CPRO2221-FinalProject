@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/student")
+@RequestMapping
 public class StudentController {
     private final JobService jobService;
     private final ApplicationService jobAppService;
@@ -24,7 +24,7 @@ public class StudentController {
     }
 
     // View (admin approved) jobs  + search
-    @GetMapping("/jobs")
+    @GetMapping("/jobList")
     public String jobs(
         @RequestParam(value = "keyword", required = false) String keyword, Model model){
 
@@ -52,7 +52,7 @@ public class StudentController {
     }
 
     // Apply for a job (need to make sure they can only apply for a job once)
-    @GetMapping("/jobs/{id}")
+    @GetMapping("/apply/{id}")
     public String apply(@PathVariable Long id, Model model){
         Optional<JobApplication> jobApp = jobAppService.findById(id);
 
@@ -65,7 +65,7 @@ public class StudentController {
     }
 
     // Save job application
-    @PostMapping("/jobs/{id}/save")
+    @PostMapping("myJobs/jobs/{id}/save")
     public String saveJob(@Valid @ModelAttribute("job") JobApplication jobApp,
                            BindingResult result) {
         if (result.hasErrors()) {
