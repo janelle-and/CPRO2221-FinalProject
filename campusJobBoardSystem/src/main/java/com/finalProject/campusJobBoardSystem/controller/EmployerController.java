@@ -21,6 +21,7 @@ import com.finalProject.campusJobBoardSystem.service.UserService;
 
 import jakarta.validation.Valid;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class EmployerController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userService.findByEmail(email);
         job.setEmployer_id(currentUser);
+        job.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         jobService.save(job);
         return "redirect:/myJobs";
     }
@@ -76,7 +78,7 @@ public class EmployerController {
         if (job == null) {
             return "redirect:/myJobs";
         }
-
+        job.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         model.addAttribute("job", job);
         return "editJob";
     }
