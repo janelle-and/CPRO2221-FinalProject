@@ -24,10 +24,6 @@ public class ApplicationService{
         return jobAppRepo.findAll();
     }
 
-    public Optional<JobApplication> findById(Long id) {
-        return jobAppRepo.findById(id);
-    }
-
     public JobApplication save(JobApplication jobApp) {
         return jobAppRepo.save(jobApp);
     }
@@ -38,10 +34,6 @@ public class ApplicationService{
 
     public List<JobApplication> findByJob(Job job) {
         return jobAppRepo.findByJob(job);
-    }
-
-    public void delete(JobApplication jobApp) {
-        jobAppRepo.delete(jobApp);
     }
 
 }
