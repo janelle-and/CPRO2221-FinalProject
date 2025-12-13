@@ -9,41 +9,44 @@
 <body class="d-flex flex-column min-vh-100">
 <div th:replace="~{fragments/headerUsers :: navbar}"></div>
 
-<div class="container mt-4" style="max-width: 90%">
+<!--   Job Details     -->
+<div class="container mt-4" style="max-width:90%; margin-bottom: 100px;">
     <div class="card shadow p-4 text-center">
     <h2 class="fw-bolder border-bottom border-4 border-success" style="--bs-border-opacity: .5;">Job Details</h2>
+        <!--   Job Title     -->
         <div>
             <label class="fw-bold fs-3">Title</label>
             <p th:text="${job.title}"></p>
         </div>
+        <!--   Description    -->
         <div>
             <label class="fw-bold fs-3">Description</label>
             <p th:text="${job.description}"></p>
         </div>
+        <!--   Location    -->
         <div>
             <label class="fw-bold fs-3">Location</label>
             <p th:text="${job.location}"></p>
         </div>
+        <!--   Salary     -->
         <div>
             <label class="fw-bold fs-3">Salary</label>
             <p th:text="${job.salary}"></p>
         </div>
+        <!--   Category     -->
         <div>
             <label class="fw-bold fs-3">Category</label>
             <p th:text="${job.category}"></p>
         </div>
+        <!--   Deadline    -->
         <div>
             <label class="fw-bold fs-3">Deadline</label>
             <p th:text="${job.deadline}"></p>
         </div>
         <br>
         <div>
-<!--            Apply button should be a alert box that asks if they want to apply? -->
             <a class="btn btn-primary" th:href="@{'/apply/'+ ${job.job_id}}">Apply</a>
-
         </div>
-
-
     </div>
 </div>
 

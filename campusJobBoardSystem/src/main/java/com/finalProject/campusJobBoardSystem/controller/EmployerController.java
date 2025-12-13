@@ -42,9 +42,11 @@ public class EmployerController {
     // View employer's job postings
     @GetMapping("/myJobs")
     public String jobs(Model model) {
+        // gets employer's email, to find the current employer, to then get their job posts
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User employer = userService.findByEmail(email);
         List<Job> jobs = jobService.findByEmployer(employer);
+
         model.addAttribute("jobs", jobs);
         return "myJobs";
     }
@@ -59,13 +61,17 @@ public class EmployerController {
     // Save new job posting
     @PostMapping("/myJobs/save")
     public String saveItem(@Valid @ModelAttribute("job") Job job, BindingResult result) {
+        // if job form isn't valid, return to editJob form
         if (result.hasErrors()) {
             return "editJob";
         }
+        // gets employer's email to set the new job with employer foreign key
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userService.findByEmail(email);
         job.setEmployer_id(currentUser);
+        // update Updated_at if job being edited
         job.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+
         jobService.save(job);
         return "redirect:/myJobs";
     }
@@ -74,11 +80,10 @@ public class EmployerController {
     @GetMapping("/myJobs/edit/{id}")
     public String editItem(@PathVariable Long id, Model model) {
         Job job = jobService.findById(id);
-
+        // if job doesn't exist return to myJobs page
         if (job == null) {
             return "redirect:/myJobs";
         }
-        job.setUpdated_at(new Timestamp(System.currentTimeMillis()));
         model.addAttribute("job", job);
         return "editJob";
     }
@@ -93,13 +98,16 @@ public class EmployerController {
     // View posting applications submitted by students
     @GetMapping("/viewApplicants")
     public String jobApplications(Model model){
+        // gets employer's email, to find the current employer, to then get their job posts
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User employer = userService.findByEmail(email);
         List<Job> jobs = jobService.findByEmployer(employer);
+        // finds all applications related to all job posts by the employer
         List<JobApplication> applications = new ArrayList<>();
         for (Job job:jobs){
             applications.addAll(jobAppService.findByJob(job));
         }
+        // gets the students that apply to all the job posts
         List<User> students = new ArrayList<>();
         for (JobApplication application:applications){
             students.addAll(application.getStudent_id());

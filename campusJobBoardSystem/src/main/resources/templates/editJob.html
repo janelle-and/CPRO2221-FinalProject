@@ -8,76 +8,82 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <div th:replace="~{fragments/headerUsers :: navbar}"></div>
-<h2>Job Posting</h2>
-<div class="container mt-4 mb-4">
-    <div class="card shadow p-4 mb-4">
 
-        <h2 class="mb-4">Job Listing</h2>
+<div class="container mt-5" style="max-width: 90%;">
+    <div class="card shadow p-4">
+        <!-- Edit job form-->
+        <h2 class="text-center mb-3">Job Posting</h2>
+        <div class="container mt-4 mb-4">
+            <div class="card shadow p-4 mb-4">
 
-        <form th:action="@{/myJobs/save}"
-              th:object="${job}"
-              method="post">
+                <h2 class="mb-4">Job Listing</h2>
 
-            <input type="hidden" th:field="*{job_id}">
+                <form th:action="@{/myJobs/save}"
+                      th:object="${job}"
+                      method="post">
 
-            <!-- TITLE -->
-            <div class="mb-3">
-                <label class="form-label">Title</label>
-                <input class="form-control" type="text" th:field="*{title}" >
-                <div class="text-danger" th:if="${#fields.hasErrors('title')}"
-                     th:errors="*{title}"></div>
+                    <input type="hidden" th:field="*{job_id}">
+
+                    <!-- TITLE -->
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input class="form-control" type="text" th:field="*{title}" >
+                        <div class="text-danger" th:if="${#fields.hasErrors('title')}"
+                             th:errors="*{title}"></div>
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+                        <div class="text-danger" th:if="${#fields.hasErrors('description')}"
+                             th:errors="*{description}"></div>
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="mb-3">
+                        <label class="form-label">Location</label>
+                        <input class="form-control" type="text" th:field="*{location}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('location')}"
+                             th:errors="*{location}"></div>
+                    </div>
+
+                    <!-- SALARY -->
+                    <div class="mb-3">
+                        <label class="form-label">Salary</label>
+                        <input class="form-control" type="text" th:field="*{salary}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('salary')}"
+                             th:errors="*{salary}"></div>
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <input class="form-control" type="text" th:field="*{category}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('category')}"
+                             th:errors="*{category}"></div>
+                    </div>
+
+                    <!-- DEADLINE -->
+                    <div class="mb-3">
+                        <label class="form-label">Deadline</label>
+                        <input class="form-control" type="date" th:field="*{deadline}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('deadline')}"
+                             th:errors="*{deadline}"></div>
+                    </div>
+
+                    <input type="hidden" th:field="*{status}">
+
+                    <input type="hidden" th:field="*{created_at}">
+
+                    <input type="hidden" th:field="*{updated_at}">
+
+                    <button class="btn btn-primary">Save</button>
+                    <a th:href="@{/myJobs}" class="btn btn-secondary ms-2">Cancel</a>
+
+                </form>
             </div>
-
-            <!-- DESCRIPTION -->
-            <div class="mb-3">
-                <label class="form-label">Description</label>
-                <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
-                <div class="text-danger" th:if="${#fields.hasErrors('description')}"
-                     th:errors="*{description}"></div>
-            </div>
-
-            <!-- LOCATION -->
-            <div class="mb-3">
-                <label class="form-label">Location</label>
-                <input class="form-control" type="text" th:field="*{location}">
-                <div class="text-danger" th:if="${#fields.hasErrors('location')}"
-                     th:errors="*{location}"></div>
-            </div>
-
-            <!-- SALARY -->
-            <div class="mb-3">
-                <label class="form-label">Salary</label>
-                <input class="form-control" type="text" th:field="*{salary}">
-                <div class="text-danger" th:if="${#fields.hasErrors('salary')}"
-                     th:errors="*{salary}"></div>
-            </div>
-
-            <!-- CATEGORY -->
-            <div class="mb-3">
-                <label class="form-label">Category</label>
-                <input class="form-control" type="text" th:field="*{category}">
-                <div class="text-danger" th:if="${#fields.hasErrors('category')}"
-                     th:errors="*{category}"></div>
-            </div>
-
-            <!-- DEADLINE -->
-            <div class="mb-3">
-                <label class="form-label">Deadline</label>
-                <input class="form-control" type="date" th:field="*{deadline}">
-                <div class="text-danger" th:if="${#fields.hasErrors('deadline')}"
-                     th:errors="*{deadline}"></div>
-            </div>
-
-            <input type="hidden" th:field="*{status}">
-
-            <input type="hidden" th:field="*{created_at}">
-
-            <input type="hidden" th:field="*{updated_at}">
-
-            <button class="btn btn-primary">Save</button>
-            <a th:href="@{/myJobs}" class="btn btn-secondary ms-2">Cancel</a>
-
-        </form>
+        </div>
     </div>
 </div>
 <br />

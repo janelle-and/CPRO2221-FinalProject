@@ -22,22 +22,26 @@ public class AuthController {
         this.encoder = encoder;
     }
 
+    // Home page - default after login
     @GetMapping("/home")
     public String home() {
         return "home";
     }
 
+    // Main login page
     @GetMapping("/login")
     public String login(){
         return "login";
     }
 
+    // Register page, creates new user and gets register page
     @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("user", new User());
         return "register";
     }
 
+    // If new user has no error, save new user, else return register page
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute  User user, BindingResult result){
         if(result.hasErrors()){

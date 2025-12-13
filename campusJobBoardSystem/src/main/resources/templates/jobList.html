@@ -79,6 +79,7 @@
                                 <a th:href="@{'/apply/'+ ${job.job_id}}" class="btn btn small btn-outline-info">Apply</a>
                             </td>
                         </tr>
+                        <!--   No approved jobs     -->
                         <tr th:if="${jobs.isEmpty()}">
                             <td colspan="7" class="text-center">
                                 <div>No Job Listings Currently Available</div>
@@ -88,9 +89,7 @@
 
                             </td>
                         </tr>
-
                         </tbody>
-
                     </table>
                 </div>
             </div>
