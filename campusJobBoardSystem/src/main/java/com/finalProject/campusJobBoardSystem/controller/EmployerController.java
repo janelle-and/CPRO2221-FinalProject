@@ -27,7 +27,6 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping
 public class EmployerController {
     private final JobService jobService;
     private final ApplicationService jobAppService;

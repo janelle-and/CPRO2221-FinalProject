@@ -23,7 +23,6 @@ import com.finalProject.campusJobBoardSystem.service.UserService;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping
 public class StudentController {
     private final JobService jobService;
     private final ApplicationService jobAppService;
@@ -82,10 +81,6 @@ public class StudentController {
     @GetMapping("/apply/{id}")
     public String saveApplication(@PathVariable Long id, @Valid @ModelAttribute("jobApp") JobApplication jobApp,
                            BindingResult result) {
-        // if the result isn't valid, return to the apply page
-        if (result.hasErrors()) {
-            return "apply";
-        }
         // gets job being applied to
         Job job = jobService.findById(id);
         // gets student applying for the job
