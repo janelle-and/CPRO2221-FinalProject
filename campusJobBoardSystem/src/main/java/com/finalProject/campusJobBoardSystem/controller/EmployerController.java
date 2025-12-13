@@ -60,7 +60,7 @@ public class EmployerController {
 
     // Save new job posting
     @PostMapping("/myJobs/save")
-    public String saveItem(@Valid @ModelAttribute("job") Job job, BindingResult result) {
+    public String saveJob(@Valid @ModelAttribute("job") Job job, BindingResult result) {
         // if job form isn't valid, return to editJob form
         if (result.hasErrors()) {
             return "editJob";
@@ -78,7 +78,7 @@ public class EmployerController {
 
     // Edit job posting
     @GetMapping("/myJobs/edit/{id}")
-    public String editItem(@PathVariable Long id, Model model) {
+    public String editJob(@PathVariable Long id, Model model) {
         Job job = jobService.findById(id);
         // if job doesn't exist return to myJobs page
         if (job == null) {
@@ -90,7 +90,7 @@ public class EmployerController {
 
     // Delete job posting
     @GetMapping("/myJobs/delete/{id}")
-    public String deleteItem(@PathVariable Long id) {
+    public String deleteJob(@PathVariable Long id) {
         jobService.deleteById(id);
         return "redirect:/myJobs";
     }
