@@ -13,9 +13,13 @@ import com.finalProject.campusJobBoardSystem.model.Job;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job,Long> {
+    // search method to search by title in approved jobs
     List<Job> findByTitleContainingIgnoreCaseAndStatus(String title, Job.Status status);
+
+    // finds job based on status (APPROVED)
     List<Job> findByStatus(Job.Status status);
 
+    // finds all jobs created by one employer (joins with foreign key)
     @Query("SELECT job FROM Job job JOIN job.employer_id e WHERE e = :employer")
     List<Job> findByEmployer(@Param("employer") User employer);
 }

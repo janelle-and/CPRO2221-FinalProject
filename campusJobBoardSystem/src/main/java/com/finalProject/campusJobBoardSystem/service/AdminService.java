@@ -16,11 +16,13 @@ public class AdminService {
         this.repo = repo;
     }
 
-    public List<User> findAllAdmins()
+    // find all users
+    public List<User> findAll()
     {
         return repo.findAll();
     }
 
+    // saves a user
     public User save(User user)
     {
         return repo.save(user);

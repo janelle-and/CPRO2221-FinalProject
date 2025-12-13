@@ -49,13 +49,16 @@ class ApplicationServiceTest {
     // test save()
     @Test
     void saveJobApplication_CorrectInfo() {
+        // arrange
         JobApplication jobApplication = new JobApplication();
         jobApplication.setApplication_id(2L);
 
         when(repo.save(any(JobApplication.class))).thenReturn(jobApplication);
 
+        // act
         JobApplication savedJobApp = service.save(jobApplication);
 
+        // assert
         assertNotNull(savedJobApp);
         assertEquals(jobApplication.getApplication_id(), savedJobApp.getApplication_id());
 
@@ -65,6 +68,7 @@ class ApplicationServiceTest {
     // test findByStudent()
     @Test
     void findByStudent_whenStudentExists() {
+        // arrange
         User student = new User();
         student.setUser_id(1L);
         student.setFullName("Student");
@@ -86,32 +90,34 @@ class ApplicationServiceTest {
 
         when(repo.findByStudent(student)).thenReturn((jobApplications));
 
+        // act
         List<JobApplication> result = service.findByStudent(student);
 
+        // assert
         assertNotNull(result);
         assertEquals(1L, result.getFirst().getApplication_id());
         verify(repo, times(1)).findByStudent(student);
     }
 
-
     // test findByJob()
     @Test
     void findByJob_whenJobExists() {
+        // arrange
         Job job = new Job();
         job.setJob_id(1L);
 
         JobApplication jobApplication = new JobApplication();
         jobApplication.setApplication_id(1L);
         jobApplication.setJob_id(job);
-        jobApplication.setStart_time(new Timestamp(System.currentTimeMillis()));
-        jobApplication.setStatus(JobApplication.Status.SUBMITTED);
         List<JobApplication> jobApplications = new ArrayList<>();
         jobApplications.add(jobApplication);
         Optional.of(job);
         when(repo.findByJob(job)).thenReturn((jobApplications));
 
+        // act
         List<JobApplication> result = service.findByJob(job);
 
+        // assert
         assertNotNull(result);
         assertEquals(1L, result.getFirst().getApplication_id());
         verify(repo, times(1)).findByJob(job);

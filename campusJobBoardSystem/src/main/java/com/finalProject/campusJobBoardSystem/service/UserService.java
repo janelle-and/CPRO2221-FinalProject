@@ -20,31 +20,33 @@ public class UserService implements UserDetailsService {
     public UserService(UserRepository userRepository) {
         this.repo = userRepository;
     }
-// finds all users
-
+    // finds all users
     public List<User> findAll() {
         return repo.findAll();
     }
-// saves user
+
+    // saves user
     @Transactional // overrides the read only
     public User save(User user) {
         return repo.save(user);
     }
-// finds by ID and throws runtime exception if no user found
+
+    // finds by ID and throws runtime exception if no user found
     public User findById(Long id) {
         return repo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found: " + id));
     }
-// finds user by email
+    // finds user by email
     public User findByEmail(String email) {
         return repo.findByEmail(email);
     }
 
+    // builds user
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        User user = repo.findByEmail(username);
+        User user = repo.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -56,6 +58,4 @@ public class UserService implements UserDetailsService {
                 .disabled(user.getStatus() == User.Status.INACTIVE)
                 .build();
     }
-
-
 }

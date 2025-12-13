@@ -8,5 +8,6 @@ import com.finalProject.campusJobBoardSystem.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    // find user by email
     User findByEmail(String email);
 }

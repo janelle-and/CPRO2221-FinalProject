@@ -68,7 +68,7 @@ public class User {
     public User() {
     }
 
-    public User(Long user_id, String full_name, String email, String password, Role role, Status status, Timestamp created_at, Timestamp updated_at, List<JobApplication> job_application) {
+    public User(Long user_id, String full_name, String email, String password, Role role, Status status, Timestamp created_at, Timestamp updated_at) {
         this.user_id = user_id;
         this.full_name = full_name;
         this.email = email;
@@ -77,7 +77,6 @@ public class User {
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.job_application = job_application;
     }
 
     // getters and setters
