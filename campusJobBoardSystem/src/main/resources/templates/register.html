@@ -17,8 +17,8 @@
             <!--   Full Name    -->
             <div class="mb-3">
                 <label for="FullName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" th:field="*{FullName}" id="FullName" placeholder="Enter Full Name" required >
-                <div th:if="${#fields.hasErrors('FullName')}" th:errors="*{FullName}"></div>
+                <input type="text" class="form-control" th:field="*{fullName}" id="FullName" placeholder="Enter Full Name" required >
+                <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
             </div>
             <!--   Email     -->
             <div class="mb-3">
