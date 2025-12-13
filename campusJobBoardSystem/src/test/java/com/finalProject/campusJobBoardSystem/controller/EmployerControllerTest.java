@@ -98,7 +98,7 @@ class EmployerControllerTest {
     // test editJob()
     @Test
     @WithMockUser(roles = "EMPLOYER")
-    void editJobForm() throws Exception {
+    void editJobForm_JobIdFound() throws Exception {
         Job job = new Job();
         job.setJob_id(2L);
 
@@ -109,6 +109,15 @@ class EmployerControllerTest {
                 .andExpect(view().name("editJob"))
                 .andExpect(model().attributeExists("job"))
                 .andExpect(model().attribute("job", job));
+    }
+
+    // test editJob()
+    @Test
+    @WithMockUser(roles = "EMPLOYER")
+    void editJobForm_NoJobIdFound() throws Exception {
+        mockMvc.perform(get("/myJobs/edit/{id}",2L ))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/myJobs"));
     }
 
     // test deleteJob()
