@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping
 public class AdminController {
     private final JobService jobService;
-    private final ApplicationService jobAppService;
     private final UserService userService;
 
-    public AdminController(JobService jobService, ApplicationService jobAppService,  UserService userService) {
+    public AdminController(JobService jobService, UserService userService) {
         this.jobService = jobService;
-        this.jobAppService = jobAppService;
         this.userService = userService;
     }
 
