@@ -21,11 +21,13 @@ public class SecurityConfig {
         this.userService = us;
     }
 
+    // initialize BCryptPasswordEncoder
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // configures role permissions and login/logout
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -54,6 +56,7 @@ public class SecurityConfig {
 
     }
 
+    // configures authentication manager
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
             throws Exception {
