@@ -39,12 +39,7 @@ class JobServiceTest {
     @Test
     void findAllJobs_Success() {
         // Arrange
-        User user = new User(2L,"name","email@email.com","123",User.Role.EMPLOYER,User.Status.ACTIVE,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
-        List<Job> jobs = Arrays.asList(
-                new Job(1L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user),
-                new Job(2L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user),
-                new Job(3L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user)
-        );
+        List<Job> jobs = Arrays.asList(new Job(),new Job(),new Job());
         when(repo.findAll()).thenReturn(jobs);
 
         // Act
@@ -61,19 +56,8 @@ class JobServiceTest {
     @Test
     void findAllAdminApproved() {
         // arranged
-        User user = new User(2L,"name","email@email.com","123",User.Role.EMPLOYER,User.Status.ACTIVE,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
+        List<Job> expectedResult =  Arrays.asList(new Job(),new Job());
 
-
-        Job job1 = new Job(1L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-        Job job2 = new Job(2L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.REJECTED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-        Job job3 = new Job(3L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-        repo.save(job1);
-        repo.save(job2);
-        repo.save(job3);
-
-        List<Job> expectedResult =  new ArrayList<>();
-        expectedResult.add(job1);
-        expectedResult.add(job3);
         when(repo.findByStatus(Job.Status.APPROVED)).thenReturn(expectedResult);
 
         // act
@@ -125,10 +109,8 @@ class JobServiceTest {
     @Test
     void findJobById_WhenJobExists_ReturnsJob() {
         // Arrange
-        User user = new User(2L,"name","email@email.com","123",User.Role.EMPLOYER,User.Status.ACTIVE,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
-        Job job = new Job(3L, "title", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-
-        repo.save(job);
+       Job job = new Job();
+       job.setJob_id(3L);
 
         when(repo.findById(3L)).thenReturn(Optional.of(job));
 
@@ -138,7 +120,7 @@ class JobServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(job.getJob_id(), result.getJob_id());
-        verify(repo, times(1)).findById(3L);
+        verify(repo, times(1)).findById(job.getJob_id());
     }
 
     // test findById(id) throws exception
@@ -200,14 +182,7 @@ class JobServiceTest {
     @Test
     void searchKeywordFound_displaysList() {
         // Arrange
-        User user = new User(2L,"name","email@email.com","123",User.Role.EMPLOYER,User.Status.ACTIVE,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
-        Job job1 = new Job(1L, "pencil", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-        Job job2 = new Job(2L, "book", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-        Job job3 = new Job(3L, "books", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user);
-        List<Job> expectedResult =  Arrays.asList(
-                new Job(2L, "book", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user),
-                new Job(3L, "books", "description", "location",10,"category", new Date(2022,5,5), Job.Status.APPROVED,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),user)
-        );
+        List<Job> expectedResult =  Arrays.asList(new Job(),new Job());
 
         when(repo.findByTitleContainingIgnoreCaseAndStatus("book",Job.Status.APPROVED)).thenReturn(expectedResult);
 

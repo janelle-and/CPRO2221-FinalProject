@@ -41,6 +41,7 @@ class StudentControllerTest {
     @MockitoBean
     private UserService userService;
 
+    // test jobs()
     @Test
     @WithMockUser(roles = "STUDENT")
     void showJobs() throws Exception {
@@ -51,6 +52,7 @@ class StudentControllerTest {
                 .andExpect(view().name("jobList"));
     }
 
+    // test jobDetails(id)
     @Test
     @WithMockUser(roles = "STUDENT")
     void showJobDetails_JobIdFound() throws Exception {
@@ -66,14 +68,16 @@ class StudentControllerTest {
                 .andExpect(model().attribute("job", job));
     }
 
+    // test jobDetails(id)
     @Test
     @WithMockUser(roles = "STUDENT")
-    void showJobDetails() throws Exception {
+    void showJobDetails_JobIdNotFound() throws Exception {
         mockMvc.perform(get("/jobDetails/{id}",2L ))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/jobList"));
     }
 
+    // test apply()
     @Test
     @WithMockUser(roles = "STUDENT")
     void viewAllJobsAppliedTo() throws Exception {
@@ -84,6 +88,7 @@ class StudentControllerTest {
                 .andExpect(view().name("apply"));
     }
 
+    // test saveApplication()
     @Test
     @WithMockUser(roles = "STUDENT")
     void saveApplication_withCorrectInformation() throws Exception {

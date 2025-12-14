@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/home", "/login", "/register", "/error").permitAll()
-                        .requestMatchers("/jobList/**","/jobDetails/**", "/application/**", "/apply/**").hasRole("STUDENT")
                         // ** is used to have access to all the sub files (like view application and then search by id)
+                        .requestMatchers("/jobList/**","/jobDetails/**", "/application/**", "/apply/**").hasRole("STUDENT")
                         .requestMatchers("/myJobs/**", "/viewApplicants/**").hasRole("EMPLOYER")
                         .requestMatchers("/userManagement/**", "/jobApproval/**").hasRole("ADMIN")
                 )

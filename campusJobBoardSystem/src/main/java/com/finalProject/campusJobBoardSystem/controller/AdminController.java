@@ -21,7 +21,7 @@ public class AdminController {
         this.userService = userService;
     }
 
-    // View all user accounts (make it so they can activate/deactivate user accounts from here? need to make another method?)
+    // View all user accounts
     @GetMapping("/userManagement")
     public String users(Model model) {
         model.addAttribute("users", userService.findAll());
